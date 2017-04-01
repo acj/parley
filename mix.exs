@@ -30,4 +30,22 @@ defmodule Parley.Mixfile do
   defp deps do
     []
   end
+
+  defp description do
+    """
+    A web-based remote shell for Elixir apps. Parley provides an IEx-like REPL
+    for running applications. It uses websockets for transport and can be used
+    from any browser.
+    """
+  end
+
+  defp package do
+    [
+      name: :parley,
+      files: ["lib", "priv", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
+      maintainers: ["Adam Jensen"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/acj/parley"}
+    ]
+  end
 end
