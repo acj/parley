@@ -5,9 +5,12 @@ defmodule Parley.Mixfile do
     [app: :parley,
      version: "0.1.0",
      elixir: "~> 1.4",
+     description: "A web-based remote shell for Elixir apps",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     package: package(),
+     consolidate_protocols: Mix.env != :test]
   end
 
   # Configuration for the OTP application
