@@ -1,14 +1,14 @@
 defmodule PhoenixShell.Endpoint do
   use Phoenix.Endpoint, otp_app: :phoenix_shell
 
-  socket "/shell", Parley.ShellSocket
+  socket "/shell", PhoenixShell.ShellSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :websockets_terminal, gzip: false,
+    at: "/", from: :phoenix_shell, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -35,7 +35,7 @@ defmodule PhoenixShell.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
-    key: "_websockets_terminal_key",
+    key: "_phoenix_shell_key",
     signing_salt: "grx61BLp"
 
   plug PhoenixShell.Router

@@ -1,8 +1,8 @@
-defmodule PhoenixShell.UserSocket do
+defmodule PhoenixShell.ShellSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", PhoenixShell.RoomChannel
+  channel "shell*", Parley.ShellChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -20,7 +20,12 @@ defmodule PhoenixShell.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(_params, socket) do
+    socket = assign(socket, :client_id, random_string(20))
     {:ok, socket}
+  end
+
+  defp random_string(length) do
+    :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
