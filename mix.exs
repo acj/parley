@@ -42,7 +42,7 @@ defmodule Parley.Mixfile do
   defp package do
     [
       name: :parley,
-      files: ["lib", "priv", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
+      files: ["lib", "priv", "web", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
       maintainers: ["Adam Jensen"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/acj/parley"}
