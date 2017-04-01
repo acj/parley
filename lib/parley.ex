@@ -1,18 +1,15 @@
 defmodule Parley do
-  @moduledoc """
-  Documentation for Parley.
-  """
+  use Application
 
-  @doc """
-  Hello world.
+  def start(_type, _args) do
+    import Supervisor.Spec
 
-  ## Examples
+    children = [
+      supervisor(Registry, [:unique, Parley.Registry]),
+      supervisor(Parley.Supervisor, []),
+    ]
 
-      iex> Parley.hello
-      :world
-
-  """
-  def hello do
-    :world
+    opts = [strategy: :one_for_one]
+    Supervisor.start_link(children, opts)
   end
 end
