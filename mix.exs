@@ -5,7 +5,7 @@ defmodule Parley.Mixfile do
     [app: :parley,
      version: "0.1.0",
      elixir: "~> 1.4",
-     description: "A web-based remote shell for Elixir apps",
+     description: description(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
