@@ -1,7 +1,9 @@
 defmodule Parley do
+  require Logger
   use Application
 
   def start(_type, _args) do
+    Logger.debug("Starting Parley")
     import Supervisor.Spec
 
     children = [
