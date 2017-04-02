@@ -19,3 +19,11 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+import { Editor } from "web/static/js/editor";
+
+export var App = {
+  run: function(){
+    Editor.run()
+  }
+}
