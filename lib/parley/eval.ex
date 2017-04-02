@@ -49,8 +49,8 @@ defmodule Parley.Eval do
         eval(code, :unicode.characters_to_list(command), counter, state)
       catch
         kind, error ->
-          Logger.warn("Error raised while evaluating command: #{command}")
-          Logger.warn("Stack trace: #{inspect System.stacktrace}")
+          Logger.debug("Error raised while evaluating command: #{command}")
+          Logger.debug("Stack trace: #{inspect System.stacktrace}")
 
           %{state | cache: '', result: {"error", format_error(kind, error, System.stacktrace)}}
       end
