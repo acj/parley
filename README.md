@@ -1,5 +1,7 @@
 # Parley
 
+[![Build Status](https://travis-ci.org/acj/parley.svg?branch=master)](https://travis-ci.org/acj/parley)
+
 A web-based remote shell for Elixir apps. Parley provides an IEx-like
 [REPL](https://en.wikipedia.org/wiki/Read–eval–print_loop) for running
 applications. It uses websockets for transport and can be used from any
