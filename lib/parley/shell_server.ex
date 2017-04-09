@@ -10,7 +10,7 @@ defmodule Parley.ShellServer do
   end
 
   def start_link(config) do
-    Logger.info("Starting #{__MODULE__} with ID #{config[:identifier]} timeout #{@timeout}")
+    Logger.debug("Starting #{__MODULE__} with ID #{config[:identifier]} timeout #{@timeout}")
     GenServer.start_link(__MODULE__, config, name: config[:name])
   end
 
@@ -41,10 +41,10 @@ defmodule Parley.ShellServer do
   end
 
   def handle_call({:eval, command}, _from, state) do
-    Logger.info "[command](#{state[:identifier]}) #{command}"
+    Logger.debug "[command](#{state[:identifier]}) #{command}"
     eval_result = Eval.evaluate(state[:evaluator], command)
     response = format_json(eval_result)
-    Logger.info "[response](#{state[:identifier]}) #{response}"
+    Logger.debug "[response](#{state[:identifier]}) #{inspect response}"
 
     {:reply, response, state, @timeout}
   end

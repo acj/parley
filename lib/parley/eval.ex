@@ -3,12 +3,11 @@ defmodule Parley.Eval do
   require Logger
 
   def start_link(opts) do
+    Logger.debug("Starting #{__MODULE__}")
 		GenServer.start_link(__MODULE__, opts)
 	end
 
   def init(opts) do
-		Logger.info "Starting #{__MODULE__}"
-
     env    = :elixir.env_for_eval(file: "iex", delegate_locals_to: nil)
     scope  = :elixir_env.env_to_scope(env)
     unsafe = opts[:allow_unsafe_commands] || false
