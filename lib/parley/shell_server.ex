@@ -5,8 +5,8 @@ defmodule Parley.ShellServer do
 
   @timeout 300_000
 
-  def start(id) do
-    {:ok, _} = Parley.Supervisor.start_child(id)
+  def start(id, opts \\ []) do
+    {:ok, _} = Parley.Supervisor.start_child(id, opts)
   end
 
   def start_link(config) do
@@ -23,7 +23,7 @@ defmodule Parley.ShellServer do
   end
 
   def init(config) do
-    {:ok, evaluator} = Parley.Eval.start_link(allow_unsafe_commands: false)
+    {:ok, evaluator} = Parley.Eval.start_link(allow_unsafe_commands: config[:allow_unsafe_commands] || false)
     state = %{identifier: config[:identifier], evaluator: evaluator}
     {:ok, state, @timeout}
   end

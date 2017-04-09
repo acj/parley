@@ -17,8 +17,9 @@ defmodule Parley.Supervisor do
     supervise(children, strategy: :simple_one_for_one)
   end
 
-  def start_child(id) do
+  def start_child(id, opts \\ %{}) do
     Logger.debug("Starting Parley shell with identifier #{inspect id}")
-    {:ok, _} = Supervisor.start_child(__MODULE__, [%{name: Parley.ShellServer.via(id), identifier: id}])
+    opts = Map.merge(%{name: Parley.ShellServer.via(id), identifier: id}, Enum.into(opts, %{}))
+    {:ok, _} = Supervisor.start_child(__MODULE__, [opts])
   end
 end
