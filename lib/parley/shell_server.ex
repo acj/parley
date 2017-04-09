@@ -42,25 +42,9 @@ defmodule Parley.ShellServer do
 
   def handle_call({:eval, command}, _from, state) do
     Logger.debug "[command](#{state[:identifier]}) #{command}"
-    eval_result = Eval.evaluate(state[:evaluator], command)
-    response = format_json(eval_result)
+    response = Eval.evaluate(state[:evaluator], command)
     Logger.debug "[response](#{state[:identifier]}) #{inspect response}"
 
     {:reply, response, state, @timeout}
-  end
-
-  defp format_json({prompt, nil}) do
-    ~s/{"prompt":"#{prompt}"}/
-  end
-
-  defp format_json({prompt, {"error", result}}) do
-    result = Inspect.BitString.escape(result, ?")
-    ~s/{"prompt":"#{prompt}","type":"error","result":"#{result}"}/
-  end
-
-  defp format_json({prompt, {type, result}}) do
-    # show double-quotes in strings
-    result = Inspect.BitString.escape(inspect(result), ?")
-    ~s/{"prompt":"#{prompt}","type":"#{type}","result":"#{result}"}/
   end
 end

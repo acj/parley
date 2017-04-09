@@ -25,8 +25,9 @@ defmodule Parley.ShellChannel do
 
   def handle_in("shell:" <> shell_identifier, message, socket) do
     if validate_client(socket, shell_identifier) do
-      result = Parley.ShellServer.eval(shell_identifier, message["data"])
-      {:reply, {:ok, %{command_result: result}}, socket}
+      eval_result = Parley.ShellServer.eval(shell_identifier, message["data"])
+      response = format_json(eval_result)
+      {:reply, {:ok, %{command_result: response}}, socket}
     else
       Logger.warn "Message unauthorized: #{message}"
       unauthorized_response()
@@ -39,5 +40,20 @@ defmodule Parley.ShellChannel do
 
   defp unauthorized_response do
     {:error, %{reason: :unauthorized}}
+  end
+
+  defp format_json({prompt, nil}) do
+    ~s/{"prompt":"#{prompt}"}/
+  end
+
+  defp format_json({prompt, {"error", result}}) do
+    result = Inspect.BitString.escape(result, ?")
+    ~s/{"prompt":"#{prompt}","type":"error","result":"#{result}"}/
+  end
+
+  defp format_json({prompt, {type, result}}) do
+    # show double-quotes in strings
+    result = Inspect.BitString.escape(inspect(result), ?")
+    ~s/{"prompt":"#{prompt}","type":"#{type}","result":"#{result}"}/
   end
 end
