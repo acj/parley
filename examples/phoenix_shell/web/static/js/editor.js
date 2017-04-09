@@ -3,24 +3,24 @@ var run = function() {
   var privateShellTopic;
 
   var setup_console = function(version){
-    var header = 'Interactive Elixir (' + version + ')\n';
-    window.jqconsole = $('#console').jqconsole(header, 'parley(1)> ', '...(1)>');
+    var header = "Interactive Elixir (" + version + ")\n";
+    window.jqconsole = $("#console").jqconsole(header, "parley(1)> ", "...(1)>");
 
     // register error styles?
-    jqconsole.RegisterMatching('**','/0','error');
+    jqconsole.RegisterMatching("**","/0","error");
 
     // Move to line start Ctrl+A.
-    jqconsole.RegisterShortcut('A', function() {
+    jqconsole.RegisterShortcut("A", function() {
       jqconsole.MoveToStart();
       handler();
     });
     // Move to line end Ctrl+E.
-    jqconsole.RegisterShortcut('E', function() {
+    jqconsole.RegisterShortcut("E", function() {
       jqconsole.MoveToEnd();
       handler();
     });
     // Clear prompt
-    jqconsole.RegisterShortcut('R', function() {
+    jqconsole.RegisterShortcut("R", function() {
       jqconsole.AbortPrompt();
       handler();
     });
@@ -33,14 +33,14 @@ var run = function() {
   BLOCK_OPENERS = ["do"];
   var TOKENS;
 
-  TOKENS = /\s+|\d+(?:\.\d*)?|"(?:[^"]|\\.)*"|'(?:[^']|\\.)*'|\/(?:[^\/]|\\.)*\/|[-+\/*]|[<>=]=?|:?[a-z@$][\w?!]*|[{}()\[\]]|[^\w\s]+/ig;
+  TOKENS = /\s+|\d+(?:\.\d*)?|"(?:[^"]|\\.)*"|"(?:[^"]|\\.)*"|\/(?:[^\/]|\\.)*\/|[-+\/*]|[<>=]=?|:?[a-z@$][\w?!]*|[{}()\[\]]|[^\w\s]+/ig;
 
 
   var multiLineHandler = function(command) {
     var braces, brackets, last_line_changes, levels, line, parens, token, _i, _j, _len, _len1, _ref, _ref1;
     levels = 0;
     last_line_changes = 0;
-    _ref = command.split('\n');
+    _ref = command.split("\n");
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       line = _ref[_i];
       last_line_changes = 0;
@@ -51,7 +51,7 @@ var run = function() {
         if (__indexOf.call(BLOCK_OPENERS, token) >= 0) {
           levels++;
           last_line_changes++;
-        } else if (token === 'end') {
+        } else if (token === "end") {
           levels--;
           last_line_changes--;
         }
@@ -77,21 +77,21 @@ var run = function() {
   var handleShellServerResponse = function(message) {
     var reply = JSON.parse(message.command_result);
     if (reply) {
-      prompt = $('.jqconsole-cursor').parent().find('span')[0];
+      prompt = $(".jqconsole-cursor").parent().find("span")[0];
       $(prompt).html(reply.prompt);
       jqconsole.SetPromptLabel(reply.prompt);
       jqconsole.prompt_label_continue = reply.prompt.replace("parley", "...");
 
-      jqconsole.Write(reply.result + '\n', reply.type);
+      jqconsole.Write(reply.result + "\n", reply.type);
     }
   };
 
   var evalResultHandler = function(command, identifier) {
     if (command) {
         privateShellTopic.push("shell:" + identifier, {data: command})
-          .receive('ok', handleShellServerResponse)
+          .receive("ok", handleShellServerResponse)
           .receive("error", resp => { console.log("Error evaluating command: ", resp) } )
-          .receive('timeout', () => { console.log("Timed out waiting for command") })
+          .receive("timeout", () => { console.log("Timed out waiting for command") })
     }
     var handler_with_identifier = function(command) {
       evalResultHandler(command, identifier);
@@ -125,7 +125,7 @@ var run = function() {
   var _phoenix = require("phoenix");
   var socket = new _phoenix.Socket("/shell", { params: { token: window.userToken } });
   socket.connect();
-  var $status = $('#status');
+  var $status = $("#status");
 
   commonTopic = socket.channel("shell", {});
   commonTopic.onError( () => console.log("The common channel reported an error") )
