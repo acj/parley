@@ -51,7 +51,7 @@ defmodule Parley.Eval do
           Logger.debug("Error raised while evaluating command: #{command}")
           Logger.debug("Stack trace: #{inspect System.stacktrace}")
 
-          %{state | cache: '', result: {"error", format_error(kind, error, System.stacktrace)}}
+          %{state | cache: '', result: {:error, format_error(kind, error, System.stacktrace)}}
       end
 
     {new_prompt(new_state), new_state}
@@ -109,7 +109,7 @@ defmodule Parley.Eval do
            scope: scope,
            binding: new_binding,
            counter: state[:counter] + 1,
-           result: {"ok", result}}
+           result: {:ok, result}}
 
       { :error, { line, error, token } } ->
         if token == [] do
