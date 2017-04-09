@@ -75,7 +75,6 @@ var run = function() {
   };
 
   var handleShellServerResponse = function(message) {
-    console.log(message);
     var reply = JSON.parse(message.command_result);
     if (reply) {
       prompt = $('.jqconsole-cursor').parent().find('span')[0];
