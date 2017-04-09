@@ -4,7 +4,7 @@ var run = function() {
 
   var setup_console = function(version){
     var header = 'Interactive Elixir (' + version + ')\n';
-    window.jqconsole = $('#console').jqconsole(header, 'iex(1)> ', '...(1)>');
+    window.jqconsole = $('#console').jqconsole(header, 'parley(1)> ', '...(1)>');
 
     // register error styles?
     jqconsole.RegisterMatching('**','/0','error');
@@ -81,7 +81,7 @@ var run = function() {
       prompt = $('.jqconsole-cursor').parent().find('span')[0];
       $(prompt).html(reply.prompt);
       jqconsole.SetPromptLabel(reply.prompt);
-      jqconsole.prompt_label_continue = reply.prompt.replace("iex", "...");
+      jqconsole.prompt_label_continue = reply.prompt.replace("parley", "...");
 
       jqconsole.Write(reply.result + '\n', reply.type);
     }

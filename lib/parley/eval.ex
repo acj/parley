@@ -81,7 +81,7 @@ defmodule Parley.Eval do
 
   defp new_prompt(state) do
     prefix = if state[:cache] != '', do: "..."
-    "#{prefix || "iex"}(#{state[:counter]})> "
+    "#{prefix || "parley"}(#{state[:counter]})> "
   end
 
   # The expression is parsed to see if it's well formed.
