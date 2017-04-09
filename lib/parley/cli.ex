@@ -7,7 +7,7 @@ defmodule Parley.CLI do
 
   def start do
     shell_identifier = "MyShellIdentifier"
-    {:ok, _} = Parley.ShellServer.start(shell_identifier)
+    {:ok, _} = Parley.ShellServer.start(shell_identifier, allow_unsafe_commands: true)
 
     do_command_loop(shell_identifier, "parley(1)> ")
   end
