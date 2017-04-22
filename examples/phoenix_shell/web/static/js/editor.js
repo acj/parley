@@ -100,7 +100,6 @@ var run = function() {
   };
 
   var joinPrivateTopicHandler = function(socket, message, identifier) {
-    console.log(message);
     evalResultHandler(null, identifier);
   }
 
