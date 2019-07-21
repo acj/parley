@@ -47,13 +47,25 @@ defmodule Parley.ShellChannel do
   end
 
   defp format_json({prompt, {"error", result}}) do
-    result = Inspect.BitString.escape(result, ?")
+    result =
+      if is_binary(result) do
+        String.replace(inspect(result), "\"", "\\\"")
+      else
+        inspect(result)
+      end
+
     ~s/{"prompt":"#{prompt}","type":"error","result":"#{result}"}/
   end
 
   defp format_json({prompt, {type, result}}) do
     # show double-quotes in strings
-    result = Inspect.BitString.escape(inspect(result), ?")
+    result =
+      if is_binary(result) do
+        String.replace(inspect(result), "\"", "\\\"")
+      else
+        inspect(result)
+      end
+
     ~s/{"prompt":"#{prompt}","type":"#{type}","result":"#{result}"}/
   end
 end
